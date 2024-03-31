@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <title>Bookers2</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+<script src="https://kit.fontawesome.com/fd0155edc4.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="container">
+            <li>
+              <%= link_to "Bookers", root_path %>
+            </li>
+        <% if user_signed_in? %>
+          <ul class="navbar-nav" style="flex-direction: row;">
+            <li>
+              <i class="fa-solid fa-house"></i>
+              <%= link_to "Home", user_path(current_user.id) %>
+            </li>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <%= link_to "Users", users_path %>
+            </li>
+            <li>
+              <i class="fa-solid fa-book-open"></i>
+              <%= link_to "Books", books_path %>
+            </li>
+            <li>
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+            </li>
+          </ul>
+        <% else %>
+          <ul>
+            <li>
+              <i class="fa-solid fa-house"></i>
+              <%= link_to "Home", root_path %>
+            </li>
+            <li>
+              <i class="fa-solid fa-link"></i>
+              <%= link_to "About", about_path %>
+            </li>
+            <li>
+              <i class="fa-solid fa-user-plus"></i>
+              <%= link_to "Sign up", new_user_registration_path %>
+            </li>
+            <li>
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <%= link_to "Log in", new_user_session_path %>
+            </li>
+          </ul>
+        <% end %>
+        </div>
+      </nav>
+    </header>
+    
+    <% flash.each do |message_type, message| %>
+      <div><%= message %></div>
+    <% end %>
+    
+  
+    <%= yield %>
+  </body>
+</html>

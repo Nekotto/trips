@@ -1,0 +1,20 @@
+<!--投稿のエディット-->
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>error prohibited this obj from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h1>Editing Book</h1>
+<%= form_with model: @book do |f| %>
+  <label for="inputName">Title</label><br>
+  <%= f.text_field :title, id:"inputName" %><br>
+  <label for="inputBody">Opinion</label><br>
+  <%= f.text_area :body, id:"inputBody"  %>  <br>
+  <%= f.submit "Update Book" %><br>
+  <%= link_to "Back" , books_path %>
+  <%= link_to "Show" , book_path(@book) %>
+<% end %>
