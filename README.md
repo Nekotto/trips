@@ -1,24 +1,37 @@
-# README
+<!--スプレッドシートのURL-->
+<!--https://docs.google.com/spreadsheets/d/15j469ezh9fGJDGLUALVWz5Lw3ie1b6XyEZoJ5qJEVSs/edit?usp=sharing-->
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# 旅人のさえずり
+​
+## サイト概要
+### サイトテーマ
+実際に行った旅行プランをレビューし、その投稿に対しいいね（行ってみたい）とコメントを付与できる旅行プランのレビューサイト
+​
+### テーマを選んだ理由
+私は年２回ほどの旅行を趣味の一つとしていて、その瞬間を大切にするため旅行プランはしっかり練りたいと考えています。
+ただSNSなどのカジュアルなコミュニティサイトでは「○○がよかった」という簡単な情報がほとんどで、移動時間や注意事項
+などの"行ってみて分かったこと"を知る術がありません。
+今回私と同じくお金や時間を使う旅行プランはしっかり練りたいという方が多いと考え、旅行プランを実施してみてどうだったのかレビューを共有し合い
+より良い旅行を実現する"旅行プランのレビューサイト"を作成することを決めました。
+​
+### ターゲットユーザ
+旅好きから久しぶりに旅行をするすべての人
+​
+### 主な利用シーン
+- 自身の旅行と撮った写真を共有し見てもらいたいとき
+- 旅行先を決める際"行ってみたい"の数で決めたいとき
+- 旅行は時間的に無理をせず効率的に回りたいとき
+- 自分の気に入ったユーザーが高く評価する旅行プランを辿りたいとき
+​
+## 設計書
+後ほど作成予定
+​
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
+ 
+## 使用素材
+後ほど作成予定
