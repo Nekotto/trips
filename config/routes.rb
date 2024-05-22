@@ -1,10 +1,22 @@
 Rails.application.routes.draw do
-  root to: "homes#top"
-  get 'home/about' => 'homes#about', as: 'about'
-  devise_for :users
-
-  resources :books, only: [:create, :index, :show, :edit, :update, :destroy]
-
-  resources :users, only: [:show, :index, :edit, :update]
-
+  scope module: :public do
+    root to: "articles#index"
+    devise_for :users
+    devise_for :admin, skip: [:registrations, :password], controllers: {
+      sessions: 'admin/sessions'
+    }
+   
+    namespace :admin do
+      get 'dashboards', to: 'dashboards#index'
+      resources :users, only: [:destroy]
+    end
+    
+  
+    resources :articles, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+      resource :favorite, only: [:create, :destroy]
+      resources :post_comments, only: [:create, :destroy]
+    end
+    resources :users, only: [:show, :index, :edit, :update]
+    
+  end
 end

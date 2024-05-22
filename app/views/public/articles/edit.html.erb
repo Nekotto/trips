@@ -1,0 +1,24 @@
+<!--投稿のエディット-->
+<div class="container">
+<% if @article.errors.any? %>
+  <%= @article.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @article.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h3>編集</h3>
+<%= form_with model: @article do |f| %>
+  <label for="inputImage">画像</label><br>
+  <%= f.file_field :image, id:"inputImage" %><br>
+  <label for="inputName">タイトル</label><br>
+  <%= f.text_field :title, id:"inputName",  class: 'form-control',size: "20x10" %><br>
+  <label for="inputBody">本文</label><br>
+  <%= f.text_area :body, id:"inputBody",  class: 'form-control',size: "20x10" %>  <br>
+  <%= f.submit "更新", class: "btn btn-secondary"  %><br>
+  <%= link_to "戻る" , articles_path, class: "btn btn-secondary"  %>
+  <%= link_to "詳細" , article_path(@article) %>
+<% end %>
+</div>

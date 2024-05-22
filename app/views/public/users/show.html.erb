@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div>
+        <h1>ユーザー情報</h1>
+        <%= image_tag @user.get_profile_image(100,100) %>
+        <h3><%= @user.name %></h3>
+        <h3>introduction</h3>
+        <h4><%= @user.introduction %></h4>
+      </div>
+      <%= link_to edit_user_path(@user) do %>
+      <i class="fa-solid fa-user-gear"></i>
+      <% end %>
+    </div>
+  
+    <div class="col-md-8 offset-md-1">
+  
+    <h1>投稿一覧</h1>
+      <table>
+      
+      <% @articles.each do |article| %>
+            <th>
+            <%= link_to article_path(article.id) do %>
+              <%= image_tag article.get_image(100,100) %></br>
+              <%= article.title %>
+            </th>
+            <% end %>
+            <th><%= article.body.truncate(20) %></th>
+            <th><%= link_to "#{article.favorites.count} 行ってみたい", article_path(article.id) %></th>
+            <th><%= article.created_at.strftime('%Y年%m月%d日') %></th>
+        </tr>
+      <% end %>
+      <%= paginate @articles %>
+      </table>
+    </div>
+  </div>
+</div>

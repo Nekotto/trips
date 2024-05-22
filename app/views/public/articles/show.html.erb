@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- ユーザーの詳細 -->
+      <div>
+        <h3>ユーザー情報</h3>
+        <%= link_to user_path(@articles.user_id) do %>
+        <%= image_tag @user.get_profile_image(100,100) %>
+        <h3><%= @user.name %></h3>
+        <% end %>
+        <h3>introduction</h3>
+        <h4><%= @user.introduction %></h4>
+      </div>
+      <%= link_to edit_user_path(@user) do %>
+      <i class="fa-solid fa-user-gear"></i>
+      <% end %>
+    </div>
+  
+    <div class="col-md-8 offset-md-1">
+      <h1>詳細</h1>
+      <table>
+        <tr>
+          <div class="mx-auto">
+            <%= link_to article_path(@articles) do %>
+            <%= image_tag @articles.get_image(500,500) %>
+          </div>
+          <th>
+            <%= @articles.title %>
+            <% end %>
+          </th>
+          <th><%= @articles.body %></th>
+          <th><%= @articles.created_at.strftime('%Y年%m月%d日') %></th>
+          <% if @articles.user == current_user %>
+          <th><%= link_to "編集", edit_article_path(@articles), class: "btn btn-secondary"  %></th>
+          <th><%= link_to "削除", article_path(@articles), method: :delete, class: "btn btn-secondary"  %></th>
+          <% end %>
+        </tr>
+      </table>
+          <% if @articles.favorited_by?(current_user) %>
+    <p>
+      <%= link_to article_favorite_path(@articles), method: :delete do %>
+        ♥<%= @articles.favorites.count %> 行ってみたい
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to article_favorite_path(@articles), method: :post do %>
+        ♡<%= @articles.favorites.count %> 行ってみたい
+      <% end %>
+    </p>
+  <% end %>
+      
+<div>
+  <p>コメント件数：<%= @articles.post_comments.count %></p>
+  <p><% @articles.post_comments.each do |post_comment| %>
+    <%= post_comment.comment %></p>
+    <p><%= post_comment.user.name %>
+    <%= post_comment.created_at.strftime('%Y年%m月%d日') %>
+    <% if post_comment.user == current_user %>
+    <%= link_to "削除", article_post_comment_path(post_comment.article, post_comment), method: :delete %>
+    <% end %></p>
+    
+  <% end %>
+
+</div>
+<div>
+  <%= form_with model: [@articles, @post_comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
+
+</div>
+</div>
+</div>

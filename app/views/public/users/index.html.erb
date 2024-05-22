@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- ユーザーの詳細 -->
+      <div>
+        <h1>ユーザー情報</h1>
+        <%= image_tag @user.get_profile_image(100,100) %>
+        <h3><%= @user.name %></h3>
+        <h3>introduction</h3>
+        <h4><%= @user.introduction %></h4>
+      </div>
+      <%= link_to edit_user_path(@user) do %>
+      <i class="fa-solid fa-user-gear"></i>
+      <% end %>
+    </div>
+
+    <!-- 全投稿一覧 -->
+    <div class="offset-md-1 col-md-8">
+    <h1>ユーザー一覧</h1>
+      <table>
+    <thead>
+    <tr>
+      <th>image</th>
+      <th>name</th>
+    </tr>
+    </thead>
+      <% @users.each do |user| %>
+    <tr>
+      <th><%= image_tag user.get_profile_image(100,100) %></th>
+      <th><%= user.name %></th>
+      <th><%= link_to "Show", user_path(user.id) %>
+      <% end %></th>
+      
+    </tr>
+  </div>
+</div>
+</div>

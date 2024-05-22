@@ -2,7 +2,7 @@
 
 <html lang="ja">
   <head>
-    <title>Bookers2</title>
+    <title>旅人のさえずり</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,55 +12,52 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <header>
-      <nav class="navbar">
+
+ <body class="d-flex flex-column vh-100">
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <li>
-              <%= link_to "Bookers", root_path %>
-            </li>
+          <%= link_to "旅人のさえずり", root_path %>
+          <a class="navbar-brand p-3" href="/"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
-          <ul class="navbar-nav" style="flex-direction: row;">
-            <li>
-              <i class="fa-solid fa-house"></i>
-              <%= link_to "Home", user_path(current_user.id) %>
+            <li class="nav-item">
+              <%= link_to "ホーム", root_path  %>
             </li>
-            <li>
-              <i class="fa-solid fa-users"></i>
-              <%= link_to "Users", users_path %>
+            <li class="nav-item">
+              <%= link_to '新規投稿', new_article_path %>
             </li>
-            <li>
-              <i class="fa-solid fa-book-open"></i>
-              <%= link_to "Books", books_path %>
+            <li class="nav-item">
+              <%= link_to "マイページ", user_path(current_user.id) %>
             </li>
-            <li>
-              <i class="fa-solid fa-right-from-bracket"></i>
-              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
             </li>
-          </ul>
         <% else %>
-          <ul>
-            <li>
-              <i class="fa-solid fa-house"></i>
-              <%= link_to "Home", root_path %>
+            <li class="nav-item">
+              <%= link_to "ホーム", root_path %>
             </li>
-            <li>
-              <i class="fa-solid fa-link"></i>
-              <%= link_to "About", about_path %>
+            <li class="nav-item">
+              <%= link_to '新規投稿', new_user_session_path %>
             </li>
-            <li>
-              <i class="fa-solid fa-user-plus"></i>
-              <%= link_to "Sign up", new_user_registration_path %>
+            <li class="nav-item">
+              <%= link_to "サインアップ", new_user_registration_path %>
             </li>
-            <li>
-              <i class="fa-solid fa-right-to-bracket"></i>
-              <%= link_to "Log in", new_user_session_path %>
+            <li class="nav-item">
+              <%= link_to "ログイン", new_user_session_path %>
             </li>
-          </ul>
         <% end %>
+            </ul>
+          </div>
         </div>
       </nav>
     </header>
+    <main class="mb-auto">
     
     <% flash.each do |message_type, message| %>
       <div><%= message %></div>
@@ -68,5 +65,19 @@
     
   
     <%= yield %>
+    <footer class="bg-dark text-white pt-5 pb-4">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <p>"すべての旅人に最幸のプランを"</p>
+          </div>
+          <div class="col-md-8">
+            <h6 class="mt-2 mb-3"></h6>
+            <ul class="p-0 list-unstyled">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
