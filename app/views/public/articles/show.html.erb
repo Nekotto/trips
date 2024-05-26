@@ -1,75 +1,78 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <!-- ユーザーの詳細 -->
-      <div>
-        <h3>ユーザー情報</h3>
+      <dl>
+        <h3 style='margin-top: 13px;'>ユーザー</h3>
         <%= link_to user_path(@articles.user_id) do %>
-        <%= image_tag @user.get_profile_image(100,100) %>
-        <h3><%= @user.name %></h3>
+          <%= image_tag @user.get_profile_image(1000,1000), style: "width: 100%;" %>
+          <dd><%= @user.name %></dd>
         <% end %>
-        <h3>introduction</h3>
-        <h4><%= @user.introduction %></h4>
-      </div>
+        <dt>自己紹介</dt>
+        <dd><%= @user.introduction %></dd>
       <%= link_to edit_user_path(@user) do %>
       <i class="fa-solid fa-user-gear"></i>
       <% end %>
     </div>
   
     <div class="col-md-8 offset-md-1">
-      <h1>詳細</h1>
-      <table>
-        <tr>
-          <div class="mx-auto">
-            <%= link_to article_path(@articles) do %>
-            <%= image_tag @articles.get_image(500,500) %>
-          </div>
-          <th>
-            <%= @articles.title %>
-            <% end %>
-          </th>
-          <th><%= @articles.body %></th>
-          <th><%= @articles.created_at.strftime('%Y年%m月%d日') %></th>
+      <h2 style='margin-top: 9px;'>詳細</h2>
+
+            <div class="mx-auto", style="border: solid 0.5px #dcdcdc; border-radius: 5px; box-shadow: 2px 2px 2px #a9a9a9; padding: 20px; margin: 10px;">
+            <%= image_tag @articles.get_image(1000,1000), style: "width: 100%; border-radius: 0.25rem;"%>
+            <h4><%= @articles.title %></h4>
+            <div class="caption"><%= @articles.body %></div>
+            <div class="text-right text-muted"><%= @articles.created_at.strftime('%Y年%m月%d日') %></div>
           <% if @articles.user == current_user %>
-          <th><%= link_to "編集", edit_article_path(@articles), class: "btn btn-secondary"  %></th>
-          <th><%= link_to "削除", article_path(@articles), method: :delete, class: "btn btn-secondary"  %></th>
+            <th><%= link_to "編集", edit_article_path(@articles), class: "btn btn-secondary"  %></th>
+            <th><%= link_to "削除", article_path(@articles), method: :delete, class: "btn btn-secondary"  %></th>
+            <% end %></div>
+          <% if user_signed_in? %>
+            <% if @articles.favorited_by?(current_user) %>
+              <button type="button" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">
+                <%= link_to article_favorite_path(@articles), method: :delete do %>
+                ♥<%= @articles.favorites.count %> 行ってみたい
+            <% end %>
+              </button>
+              <% else %>
+              <button type="button" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">
+                <%= link_to article_favorite_path(@articles), method: :post do %>
+                  ♡<%= @articles.favorites.count %> 行ってみたい
+                <% end %>
+              </button>
+            <% end %>
+          <% else %>
+            <button type="button" class="btn btn-outline-secondary btn-sm" role="button" aria-pressed="true">
+              <%= link_to new_user_session_path do %>♡
+              <%= @articles.favorites.count %> 行ってみたい
+            </button>
           <% end %>
-        </tr>
-      </table>
-          <% if @articles.favorited_by?(current_user) %>
-    <p>
-      <%= link_to article_favorite_path(@articles), method: :delete do %>
-        ♥<%= @articles.favorites.count %> 行ってみたい
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to article_favorite_path(@articles), method: :post do %>
-        ♡<%= @articles.favorites.count %> 行ってみたい
-      <% end %>
-    </p>
-  <% end %>
+        <% end %>
+
+        
+    <div>
+      <p>コメント件数：<%= @articles.post_comments.count %></p>
       
-<div>
-  <p>コメント件数：<%= @articles.post_comments.count %></p>
-  <p><% @articles.post_comments.each do |post_comment| %>
-    <%= post_comment.comment %></p>
-    <p><%= post_comment.user.name %>
-    <%= post_comment.created_at.strftime('%Y年%m月%d日') %>
-    <% if post_comment.user == current_user %>
-    <%= link_to "削除", article_post_comment_path(post_comment.article, post_comment), method: :delete %>
-    <% end %></p>
-    
-  <% end %>
+        <% @articles.post_comments.each do |post_comment| %>
+        <!--以下コメント-->
+          <div style="border: solid 0.5px #dcdcdc; border-radius: 5px; box-shadow: 2px 2px 2px #a9a9a9; padding-left: 20px; margin-top: 10px;" >
+            <p><%= post_comment.comment %></p>
+            <p><%= post_comment.user.name %>
+            <%= post_comment.created_at.strftime('%Y年%m月%d日') %>
+              <% if post_comment.user == current_user %>
+              <%= link_to "削除", article_post_comment_path(post_comment.article, post_comment), method: :delete %>
+              <% end %></p>
+          </div>
+      <% end %>
+    </div>
+  <div>
+    <%= form_with model: [@articles, @post_comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメント", style: 'font: 15px/24px sans-serif;	box-sizing: border-box;	width: 100%;	padding: 0.3em;	padding-left: 20px;	letter-spacing: 1px;	border: 1px: #c0c0c0; margin-top: 50px;' %>
+  </div>
+      <%= f.submit "送信" %>
+    <% end %>
+  </div>
 
-</div>
-<div>
-  <%= form_with model: [@articles, @post_comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
-
-</div>
-</div>
+    </div>
+  </div>
 </div>

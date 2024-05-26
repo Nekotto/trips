@@ -1,13 +1,14 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-3">
-      <div>
-        <h1>ユーザー情報</h1>
-        <%= image_tag @user.get_profile_image(100,100) %>
-        <h3><%= @user.name %></h3>
-        <h3>introduction</h3>
-        <h4><%= @user.introduction %></h4>
-      </div>
+    <div class="col-md-2">
+      <!-- ユーザーの詳細 -->
+      <dl>
+        <h3 style='margin-top: 13px;'>ユーザー</h3>
+        <%= image_tag @user.get_profile_image(1000,1000), style: "width: 100%;" %>
+        <dd><%= @user.name %></dd>
+        <dt class="text-muted">自己紹介</dt>
+        <dd><%= @user.introduction %></dd>
+      </dl>
       <%= link_to edit_user_path(@user) do %>
       <i class="fa-solid fa-user-gear"></i>
       <% end %>
@@ -15,23 +16,23 @@
   
     <div class="col-md-8 offset-md-1">
   
-    <h1>投稿一覧</h1>
-      <table>
-      
-      <% @articles.each do |article| %>
-            <th>
-            <%= link_to article_path(article.id) do %>
-              <%= image_tag article.get_image(100,100) %></br>
-              <%= article.title %>
-            </th>
-            <% end %>
+    <h2 style='margin-top: 10px;'>投稿一覧</h2>
+      <table cellpadding="10" summary="10px">
+        <% @articles.each do |article| %>
+          <tr style="box-shadow: 2px 2px 2px grey; padding-left: 20px; margin-top: 10px;">
+            <th><%= link_to article_path(article.id) do %>
+              <%= image_tag article.get_image(100,100) %></th>
+              <th><%= article.title %></th>
+              <% end %>
             <th><%= article.body.truncate(20) %></th>
-            <th><%= link_to "#{article.favorites.count} 行ってみたい", article_path(article.id) %></th>
+            <th><%= link_to "#{article.favorites.count} 行ってみたい", article_path(article.id), class: "text-dark" %></th>
             <th><%= article.created_at.strftime('%Y年%m月%d日') %></th>
-        </tr>
-      <% end %>
-      <%= paginate @articles %>
+          </tr>
+
+        <% end %>
       </table>
+        <%= paginate @articles %>
+
     </div>
   </div>
 </div>

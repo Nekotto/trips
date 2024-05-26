@@ -1,4 +1,4 @@
-<h2>サインアップ</h2>
+<h3>サインアップ</h3>
 
   <%= form_with model: @user, url: user_registration_path do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "サインアップ", class: "btn btn-secondary"  %>
+    <%= f.submit "Sign up", class: "btn btn-secondary"  %>
   </div>
 <% end %>
 
